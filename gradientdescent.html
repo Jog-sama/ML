@@ -1,0 +1,62 @@
+<html lang="" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>ML PRACS</title>
+</head>
+
+<body>
+
+    <pre>
+        
+        import numpy as np
+        # We have a value of x and y vectors, we have to derive the equation of this x and y line 
+        # we have X and Y we need to come with correct value of M and B in Y = MX + B
+        def gradient_descent(x,y):
+            m_curr=b_curr = 0
+            iterations = 1000
+            n = len(x)
+            learning_rate= 0.001
+            for i in range (iterations):
+                    y_predicated = m_curr*x + b_curr
+                    cost = (1/n)* sum( [val**2 for val in (y-y_predicated)])
+                    #m derivative & b derivative
+                    md = - (2/n) *sum(x*(y-y_predicated))
+                    
+                    bd = -(2/n) *sum(y - y_predicated) 
+                    m_curr= m_curr- learning_rate* md 
+                    b_curr=b_curr learning_rate * bd
+                    
+                    print("m {}, b {}, iteration {}, cost {}".format(m_curr,b_curr,i,cost))
+        x = np.array([1, 2, 3, 4, 5])
+        y = np.array([5, 7, 9, 11, 13])
+        gradient_descent (x,y)
+
+
+
+        import numpy as np
+import pandas as pd
+
+        def gradient_descent(X, y, alpha=0.01, iterations=1000):
+            m = len(y)
+            theta = np.zeros((X.shape[1], 1))
+            for i in range(iterations):
+                h = X.dot(theta)
+                error = h - y
+                gradient = X.T.dot(error) / m
+                theta -= alpha * gradient
+            return theta
+
+        # Example usage:
+        data = pd.read_csv('data.csv')
+        X = data.iloc[:, :-1].values
+        y = data.iloc[:, -1].values.reshape(-1, 1)
+        X = (X - X.mean()) / X.std()
+        X = np.hstack((np.ones((X.shape[0], 1)), X))
+        theta = gradient_descent(X, y)
+print(theta)
+
+    </pre>
+
+</body>
+</html>

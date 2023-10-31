@@ -1,0 +1,52 @@
+<html lang="" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>ML PRACS</title>
+</head>
+
+<body>
+
+    <pre>
+        import numpy as np
+        import pandas as pd
+        
+        def PCA(X, n_components):
+            # Subtract the mean of each variable
+            X_meaned = X - np.mean(X, axis=0)
+        
+            # Calculate the covariance matrix
+            cov_matrix = np.cov(X_meaned, rowvar=False)
+        
+            # Calculate the eigenvalues and eigenvectors
+            eigenvalues, eigenvectors = np.linalg.eig(cov_matrix)
+        
+            # Sort the eigenvalues in descending order
+            sorted_index = np.argsort(eigenvalues)[::-1]
+            sorted_eigenvalues = eigenvalues[sorted_index]
+            sorted_eigenvectors = eigenvectors[:, sorted_index]
+        
+            # Select a subset from the rearranged Eigenvalue matrix
+            eigenvector_subset = sorted_eigenvectors[:, :n_components]
+        
+            # Transform the data
+            X_reduced = np.dot(eigenvector_subset.T, X_meaned.T).T
+        
+            return X_reduced
+        
+        # Example usage:
+        data = pd.read_csv('data.csv')
+        X_train = data.iloc[:, :-1].values
+        y_train = data.iloc[:, -1].values.reshape(-1, 1)
+        X_reduced = PCA(X_train, 2)
+        print(X_reduced)
+        Heres how to use the code:
+        
+        First call the PCA function with the feature matrix X and number of principal components n_components as parameters.
+        Finally use the reduced feature matrix X_reduced for further analysis.
+        To implement this code in PyCharm editor, you can create a new Python file and copy-paste the code into it. Then you can replace data.csv with your own dataset file name and run the code.
+
+    </pre>
+
+</body>
+</html>

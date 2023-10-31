@@ -1,0 +1,54 @@
+<html lang="" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>ML PRACS</title>
+</head>
+
+<body>
+
+    <pre>
+        import pandas as pd
+        from sklearn.preprocessing import StandardScaler, MinMaxScaler
+        from sklearn.impute import SimpleImputer
+        data = {
+        "CustomerID": [1, 2, 3, 4, 5],
+        "Age": [25, 30, 22, None, 40],
+        "Income": [50000, None, 60000, 75000, 80000],
+        "PurchaseHistory": [10, 5, 8, 12, None],
+        "Categorical_column": [“Low", "Low", "Medium", "High", "High"]}
+        df = pd.DataFrame(data)
+        print(data)
+
+        # Imputation
+        imputer = SimpleImputer(strategy=”mean”)
+        df[”Age“] = imputer.fit_transform(df[[”Age”]])
+        df[”Income“] = imputer.fit_transform(df[[“Income“]])
+        print(“After Imputation:\n“, "Age:\n", df[”Age“], "\nIncome:\n", df[”Income“])
+
+        # Anomaly Detection
+        z_scores = (df[[“Age”, "Income", "PurchaseHistory”]] - df[[”Age", "Income",
+        "PurchaseHistory“]].mean()) / df[
+        [”Age", "Income", "PurchaseHistory“]].std()
+        outliers = z_scores.abs() > 3 # Adjust threshold as needed
+        df = df[-outliers.any(axis=1)]
+        print(“After anomaly detection: \n", df[-outliers.any(axis=1)])
+
+        # Standardization
+        print(“Standardization\n”, z_scores)
+
+        # Normalization
+        min_max_scaler = MinMaxScaler()
+        df[[“Age“, "Income", "PurchaseHistory”]] = min_max_scaler.fit_transform(df[[”Age",
+        "Income", "PurchaseHistory”]])
+        print(”Normalization\n", df[[”Age", "Income", ”PurchaseHistory”]])
+
+        #Encoding
+        ordinal_mapping = {"Low”: 0, "Medium": 1, "High": 2}
+        df[”Categorical_column"] = df['Categorical_column'].map(ordinal_mapping)
+        print(“Encoding:\n“, df[“Categorical_column“])
+
+    </pre>
+
+</body>
+</html>

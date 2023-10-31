@@ -1,0 +1,47 @@
+<html lang="" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>ML PRACS</title>
+</head>
+
+<body>
+
+    <pre>
+        import pandas as pd
+
+        # Create a sample dataframe
+        data = {'Name': ['John', 'Mike', 'Sarah', 'Kate'],
+                'Age': [25, 30, 28, 35],
+                'Gender': ['M', 'M', 'F', 'F']}
+        df = pd.DataFrame(data)
+        
+        # Select a single column by name
+        col1 = df['Name']
+        print(col1)
+        
+        # Select multiple columns by name
+        col2 = df[['Name', 'Age']]
+        print(col2)
+        
+        # Select a single column by index
+        col3 = df.iloc[:, 0]
+        print(col3)
+        
+        # Select multiple columns by index
+        col4 = df.iloc[:, [0, 1]]
+        print(col4)
+        
+        # Select a single column by boolean indexing
+        col5 = df.loc[:, df.columns == 'Name']
+        print(col5)
+        
+        # Select multiple columns by boolean indexing
+        col6 = df.loc[:, df.columns.isin(['Name', 'Age'])]
+        print(col6)
+        
+
+    </pre>
+
+</body>
+</html>
