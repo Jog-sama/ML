@@ -1,0 +1,66 @@
+<html lang="" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>ML PRACS</title>
+</head>
+
+<body>
+
+    <pre>
+        # Importing necessary packages
+        import pandas as pd
+        import numpy as np
+        
+        # Load the dataset
+        data = pd.read_csv('path/to/your/dataset.csv')
+        
+        # Split the data into training and testing sets
+        train_data = data.sample(frac=0.8, random_state=0)
+        test_data = data.drop(train_data.index)
+        
+        # Normalize the data
+        train_data = (train_data - train_data.mean()) / train_data.std()
+        test_data = (test_data - test_data.mean()) / test_data.std()
+        
+        # Add a column of ones to the training and testing sets
+        train_data.insert(0, 'Ones', 1)
+        test_data.insert(0, 'Ones', 1)
+        
+        # Separate the independent variables (X) from the dependent variable (y) in both sets
+        X_train = train_data.iloc[:, :-1].values
+        y_train = train_data.iloc[:, -1].values.reshape(-1, 1)
+        X_test = test_data.iloc[:, :-1].values
+        y_test = test_data.iloc[:, -1].values.reshape(-1, 1)
+        
+        # Define the cost function
+        def compute_cost(X, y, theta):
+            inner = np.power(((X @ theta.T) - y), 2)
+            return np.sum(inner) / (2 * len(X))
+        
+        # Define the gradient descent function
+        def gradient_descent(X, y, theta, alpha, iters):
+            for i in range(iters):
+                theta = theta - (alpha / len(X)) * np.sum((X @ theta.T - y) * X, axis=0)
+                cost = compute_cost(X, y, theta)
+            return (theta, cost)
+        
+        # Set hyperparameters alpha and number of iterations
+        alpha = 0.01
+        iters = 1000
+        
+        # Initialize theta as an array of zeros
+        theta = np.zeros((1, X_train.shape[1]))
+        
+        # Run gradient descent to get optimized values of theta and cost
+        theta_final, cost_final = gradient_descent(X_train, y_train, theta, alpha, iters)
+        
+        # Print the optimized values of theta and cost
+        print('Optimized coefficients: ', theta_final)
+        print('Final cost: ', cost_final)
+        
+
+    </pre>
+
+</body>
+</html>
